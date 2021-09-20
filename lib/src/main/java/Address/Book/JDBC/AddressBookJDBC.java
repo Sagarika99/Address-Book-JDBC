@@ -50,4 +50,19 @@ public class AddressBookJDBC {
 			e.printStackTrace();
 		}		
 	}
+	
+	public void getContactsWithParticularPeriod(String startdate) throws SQLException {
+		JDBCconnection connection = new JDBCconnection();
+		con = connection.getDBConnection();
+		try {
+			String query ="select firstname from contacts where date_added between CAST(? AS DATE) AND DATE(NOW()) ";
+			PreparedStatement stmt=con.prepareStatement(query);
+			stmt.setString(1, startdate);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) 
+				System.out.println(rs.getString(1));
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+	} 
 }

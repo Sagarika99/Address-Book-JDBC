@@ -23,4 +23,10 @@ public class AddressBookJDBCTest {
 		jdbcCon.close();
 	}
 	
+	@Test
+	public void givenDate_ShouldReturnContact() throws SQLException {
+		Connection jdbcCon = new JDBCconnection().getDBConnection();
+		addrbook.getContactsWithParticularPeriod("2018-01-01");
+		jdbcCon.close();
+	}
 }
