@@ -65,4 +65,20 @@ public class AddressBookJDBC {
 			e.printStackTrace();
 		}
 	} 
+	
+	public void getContactByCityorState() throws SQLException {
+		JDBCconnection connection = new JDBCconnection();
+		con = connection.getDBConnection();
+		try {
+			String query = String.format("SELECT address.city,COUNT(address.city) FROM contacts inner join address on address.contact_id=contacts.contact_id GROUP BY city");
+			PreparedStatement stmt=con.prepareStatement(query);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) 
+				System.out.println(rs.getString(1)+" "+
+									rs.getString(2)
+									);
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
 }
