@@ -16,4 +16,11 @@ public class AddressBookJDBCTest {
 		jdbcCon.close();
 	}
 	
+	@Test
+	public void updateTable() throws SQLException {
+		Connection jdbcCon = new JDBCconnection().getDBConnection();
+		addrbook.updateData("meghana", 104);
+		jdbcCon.close();
+	}
+	
 }

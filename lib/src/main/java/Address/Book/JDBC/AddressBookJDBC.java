@@ -1,9 +1,11 @@
 package Address.Book.JDBC;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 
 public class AddressBookJDBC {
 
@@ -29,7 +31,23 @@ public class AddressBookJDBC {
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
+		}		
+	}
+	
+	public void updateData(String firstname, int contact_id) throws SQLException {
+		try{
+			JDBCconnection connection = new JDBCconnection();
+			con = connection.getDBConnection();
+			
+			String query = "update contacts set firstname=? where contact_id=?";
+			PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt.setString(1, firstname);
+			pstmt.setInt(2, contact_id);
+			pstmt.executeUpdate();
+			System.out.println("Done");			
 		}
-		
+		catch(SQLException e) {
+			e.printStackTrace();
+		}		
 	}
 }
