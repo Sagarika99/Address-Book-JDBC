@@ -81,4 +81,35 @@ public class AddressBookJDBC {
 			e.printStackTrace();
 		}
 	}
+	
+	public void addNewContact(int id,String firstname,String lastName,String phoneno,String email,int typeId,String city,String state,String zip,int addId) throws SQLException{
+		JDBCconnection connection = new JDBCconnection();
+		con = connection.getDBConnection();
+		con.setAutoCommit(false);
+		Statement stm = con.createStatement();
+			
+		try {
+			String query = String.format("insert into contacts(contact_id,firstname,lastname,phone,date_added,email,type_id) values (%d,'%s','%s','%s',DATE(NOW()),'%s',%d);", id,firstname, lastName, phoneno, email,typeId);
+			int result = stm.executeUpdate(query);			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			con.rollback();
+		}
+		try {
+			String query = String.format("insert into address(address_id,city,state,zip,contact_id) values (%d,'%s','%s','%s',%d);", addId,city, state, zip,id);
+            int result = stm.executeUpdate(query);
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			con.rollback();
+		}
+		try {
+			con.commit();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+			
+	}
 }
